@@ -2,7 +2,7 @@
 Contributors: premmerce
 Tags: woocommerce brands, brands, product brands
 Requires at least: 4.8
-Tested up to: 6.5
+Tested up to: 6.6
 Stable tag: 1.2.13
 Requires PHP: 5.6
 License: GPLv2 or later
