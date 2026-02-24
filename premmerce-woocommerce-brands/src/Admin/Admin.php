@@ -58,6 +58,7 @@ class Admin
      */
     public function addBrandToDuplicatedProduct($duplicate, $product)
     {
+
         $duplicated = $duplicate->save();
 
         $terms = wp_get_object_terms($product->id, 'product_brand');
@@ -67,6 +68,7 @@ class Admin
         }, $terms);
 
         wp_set_object_terms($duplicated, $terms, 'product_brand');
+
     }
 
     /**
@@ -74,6 +76,7 @@ class Admin
      */
     public function addBrandsSettings()
     {
+
         add_settings_section(
             'brands_settings_section',
             __('Brands settings', 'premmerce-brands'),
@@ -102,9 +105,19 @@ class Admin
     {
         global $pagenow;
 
-        if (isset($_POST['permalink_structure']) && isset($_POST['premmerce_brands_base']) && $pagenow = 'options-permalink.php') {
-            update_option('premmerce_brands_base', wc_sanitize_permalink(wp_unslash($_POST['premmerce_brands_base'])));
+        if (! isset($_POST['permalink_structure']) || ! isset($_POST['premmerce_brands_base']) || 'options-permalink.php' !== $pagenow) {
+            return;
         }
+
+        if (! current_user_can('manage_woocommerce')) {
+            return;
+        }
+
+        if (! isset($_POST['premmerce-brands-permalinks-nonce']) || ! wp_verify_nonce(wp_unslash($_POST['premmerce-brands-permalinks-nonce']), 'premmerce-brands-permalinks')) {
+            return;
+        }
+
+        update_option('premmerce_brands_base', wc_sanitize_permalink(wp_unslash($_POST['premmerce_brands_base'])));
     }
 
     /**
@@ -114,8 +127,9 @@ class Admin
     {
         ?>
         <input type="text" name="premmerce_brands_base" class="regular-text code"
-               value="<?php echo get_option('premmerce_brands_base') ?>">
+               value="<?php echo esc_attr(get_option('premmerce_brands_base')); ?>">
         <?php
+        wp_nonce_field('premmerce-brands-permalinks', 'premmerce-brands-permalinks-nonce');
     }
 
     /**
@@ -244,6 +258,7 @@ class Admin
     public function quickEdit($columnName, $postType)
     {
         if ($postType == 'product' && $columnName == 'product_cat') {
+
             $args = array(
                 'taxonomy'   => 'product_brand',
                 'hide_empty' => false,
@@ -275,7 +290,7 @@ class Admin
             $brands = get_the_terms($post->ID, 'product_brand');
 
             if (isset($brands[0])) {
-                echo '<input type="hidden" data-input="product_brand" value="' . $brands[0]->slug . '">';
+                echo '<input type="hidden" data-input="product_brand" value="' . esc_attr($brands[0]->slug) . '">';
             }
         }
     }
@@ -319,6 +334,7 @@ class Admin
      */
     public function addBrandsToBulkEdit()
     {
+
         $args = array(
             'taxonomy'   => 'product_brand',
             'hide_empty' => false,
@@ -338,14 +354,20 @@ class Admin
      */
     public function bulkEditBrandsHandler($product)
     {
+
         $product_id = method_exists($product, 'get_id') ? $product->get_id() : $product->id;
 
         if (isset($_REQUEST['product_brand']) && $_REQUEST['product_brand'] != '') {
+
             // Delete term if brand is < Not specified > and set term or not
             if ($_REQUEST['product_brand'] == 'not_specified') {
+
                 wp_set_post_terms($product_id, '', 'product_brand');
+
             } else {
+
                 wp_set_post_terms($product_id, $_REQUEST['product_brand'], 'product_brand');
+
             }
         }
     }

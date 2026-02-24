@@ -7,6 +7,7 @@ use Premmerce\Brands\Frontend\Widgets\BrandsWidget;
 use Premmerce\SDK\V2\FileManager\FileManager;
 use Premmerce\SDK\V2\Notifications\AdminNotifier;
 use Premmerce\SDK\V2\Plugin\PluginInterface;
+use \Automattic\WooCommerce\Utilities\FeaturesUtil;
 
 /**
  * Class BrandsPlugin
@@ -47,6 +48,15 @@ class BrandsPlugin implements PluginInterface
     {
         add_action('init', array($this, 'createProductsTaxonomies'));
         add_action('widgets_init', array($this, 'registerWidgets'));
+        add_action('before_woocommerce_init', array($this, 'declareHposCompatibility'));
+    }
+
+    public function declareHposCompatibility()
+    {
+        if (class_exists(FeaturesUtil::class)) {
+            $mainFile = $this->fileManager->getMainFile();
+            FeaturesUtil::declare_compatibility('custom_order_tables', $mainFile, true);
+        }
     }
 
     /**
@@ -112,6 +122,7 @@ class BrandsPlugin implements PluginInterface
                 $this->notifier->push($error, AdminNotifier::ERROR, false);
             }
         }
+
     }
 
     /**
@@ -121,6 +132,7 @@ class BrandsPlugin implements PluginInterface
      */
     private function validateRequiredPlugins()
     {
+
         $plugins = array();
 
         /**
@@ -161,6 +173,7 @@ class BrandsPlugin implements PluginInterface
      */
     public function run()
     {
+
         $valid = count($this->validateRequiredPlugins()) === 0;
 
         if ($valid) {
@@ -182,6 +195,7 @@ class BrandsPlugin implements PluginInterface
      */
     public function activate()
     {
+
         if (! get_page_by_title('Brands')) {
             $post_data = array(
                 'post_title'   => 'Brands',
