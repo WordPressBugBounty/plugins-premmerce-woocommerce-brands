@@ -2,8 +2,8 @@
 Contributors: premmerce
 Tags: woocommerce brands, brands, product brands
 Requires at least: 4.8
-Tested up to: 6.9
-Stable tag: 1.2.15
+Tested up to: 7.1
+Stable tag: 1.2.16
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -70,6 +70,11 @@ You can also install this plugin manually:
 Please report security bugs found in the source code of this plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/premmerce-woocommerce-brands). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
 
 == Changelog ==
+
+= 1.2.16 (7th Oct 2026) =
+
+* Update: Updated Freemius SDK to the latest version
+* Improvement: WordPress 7.1 compatibility
 
 = 1.2.14 (19th Feb 2026) =
 

@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'premmerce/premmerce-woocommerce-brands',
-        'pretty_version' => '1.2.15',
-        'version' => '1.2.15.0',
-        'reference' => 'b6f6cecc0149192cc33ecb82be83122948c7b384',
+        'pretty_version' => '1.2.16',
+        'version' => '1.2.16.0',
+        'reference' => 'ba60a567bf944dfd5bbf5f6237542825d2dfdc11',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'premmerce/premmerce-woocommerce-brands' => array(
-            'pretty_version' => '1.2.15',
-            'version' => '1.2.15.0',
-            'reference' => 'b6f6cecc0149192cc33ecb82be83122948c7b384',
+            'pretty_version' => '1.2.16',
+            'version' => '1.2.16.0',
+            'reference' => 'ba60a567bf944dfd5bbf5f6237542825d2dfdc11',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
